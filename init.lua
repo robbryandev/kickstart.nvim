@@ -272,6 +272,7 @@ vim.o.termguicolors = true
 vim.keymap.set('i', 'jk', '<Esc>', { silent = true })
 vim.keymap.set('n', 'jk', 'i', { silent = true })
 
+-- quick wasd bindings
 vim.keymap.set('i', '<A-w>', '<Up>', { silent = true })
 vim.keymap.set('i', '<A-a>', '<Left>', { silent = true })
 vim.keymap.set('i', '<A-s>', '<Down>', { silent = true })
@@ -288,6 +289,14 @@ vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+
+-- Ctrl-s save binding
+vim.keymap.set('i', '<C-s>', '<Esc>:w<Enter>i', { silent = false })
+vim.keymap.set('n', '<C-s>', ':w<Enter>', { silent = false })
+
+-- Ctrl-q force quit
+vim.keymap.set('i', '<C-q>', '<Esc>:q!<Enter>', { silent = false })
+vim.keymap.set('n', '<C-q>', ':q!<Enter>', { silent = false })
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
