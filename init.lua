@@ -269,6 +269,20 @@ vim.o.termguicolors = true
 
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
+vim.keymap.set('i', 'jk', '<Esc>', { silent = true })
+vim.keymap.set('n', 'jk', 'i', { silent = true })
+
+vim.keymap.set('i', '<A-w>', '<Up>', { silent = true })
+vim.keymap.set('i', '<A-a>', '<Left>', { silent = true })
+vim.keymap.set('i', '<A-s>', '<Down>', { silent = true })
+vim.keymap.set('i', '<A-d>', '<Right>', { silent = true })
+
+vim.keymap.set('n', '<A-w>', '<Up>', { silent = true })
+vim.keymap.set('n', '<A-a>', '<Left>', { silent = true })
+vim.keymap.set('n', '<A-s>', '<Down>', { silent = true })
+vim.keymap.set('n', '<A-d>', '<Right>', { silent = true })
+
+
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
 -- Remap for dealing with word wrap
