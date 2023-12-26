@@ -74,6 +74,9 @@ require('lazy').setup({
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
 
+  -- Auto close brackets
+  'm4xshen/autoclose.nvim',
+
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
   {
@@ -106,6 +109,10 @@ require('lazy').setup({
 
       -- Adds a number of user-friendly snippets
       'rafamadriz/friendly-snippets',
+      
+      -- Emmet completions
+      'mattn/emmet-vim',
+      'dcampos/cmp-emmet-vim'
     },
   },
 
@@ -270,18 +277,12 @@ vim.o.termguicolors = true
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
 vim.keymap.set('i', 'jk', '<Esc>', { silent = true })
-vim.keymap.set('n', 'jk', 'i', { silent = true })
 
--- quick wasd bindings
-vim.keymap.set('i', '<A-w>', '<Up>', { silent = true })
-vim.keymap.set('i', '<A-a>', '<Left>', { silent = true })
-vim.keymap.set('i', '<A-s>', '<Down>', { silent = true })
-vim.keymap.set('i', '<A-d>', '<Right>', { silent = true })
-
-vim.keymap.set('n', '<A-w>', '<Up>', { silent = true })
-vim.keymap.set('n', '<A-a>', '<Left>', { silent = true })
-vim.keymap.set('n', '<A-s>', '<Down>', { silent = true })
-vim.keymap.set('n', '<A-d>', '<Right>', { silent = true })
+-- quick insert bindings
+vim.keymap.set('i', '<A-k>', '<Up>', { silent = true })
+vim.keymap.set('i', '<A-h>', '<Left>', { silent = true })
+vim.keymap.set('i', '<A-j>', '<Down>', { silent = true })
+vim.keymap.set('i', '<A-l>', '<Right>', { silent = true })
 
 
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
@@ -344,14 +345,17 @@ vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
 
+-- [[ Configure Autobrackets ]]
+require("autoclose").setup()
+
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim' },
+  ensure_installed = { 'lua', 'python', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim', 'html', 'css' },
 
   -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
-  auto_install = false,
+  auto_install = true,
 
   highlight = { enable = true },
   indent = { enable = true },
@@ -476,7 +480,6 @@ local servers = {
   -- rust_analyzer = {},
   -- tsserver = {},
   -- html = { filetypes = { 'html', 'twig', 'hbs'} },
-
   lua_ls = {
     Lua = {
       workspace = { checkThirdParty = false },
@@ -555,8 +558,15 @@ cmp.setup {
   sources = {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
+    {
+        name = 'emmet_vim',
+        option = {
+            filetypes = { 'html', 'xml', 'typescriptreact', 'javascriptreact', 'css', 'sass', 'scss', 'less', 'heex', 'tsx', 'jsx', 'astro', 'vue', 'svelte', 'php' },
+        }
+    }
   },
 }
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+vim.cmd(":startinsert")
